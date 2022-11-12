@@ -42,7 +42,7 @@ client.on("interactionCreate", async (interaction) => {
 });
 
 
-client.login(process.env.TEST_TOKEN).then(() => {
+client.login(process.env.MAIN_TOKEN).then(() => {
   eventHandler(client);
   commandHandler(client);
 });
