@@ -16,7 +16,7 @@ for (const file of commandFiles) {
   commands.push(command.data.toJSON());
 }
 
-const rest = new REST({ version: "10" }).setToken(process.env.TEST_TOKEN);
+const rest = new REST({ version: "10" }).setToken(process.env.MAIN_TOKEN);
 
 rest
   .put(Routes.applicationCommands(clientId), { body: commands })

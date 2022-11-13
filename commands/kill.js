@@ -3,12 +3,6 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("kill")
     .setDescription("Zabijanie")
-    .addStringOption((option) =>
-      option
-        .setName("kategoria")
-        .setDescription("Kategorie gifów")
-        .setRequired(true)
-    )
     .addUserOption((option) =>
       option
         .setName("target")
