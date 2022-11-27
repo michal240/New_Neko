@@ -1,25 +1,24 @@
-const { SlashCommandBuilder, PermissionFlagsBits } = require("discord.js");
-const gifs_schema = require('../schema/gifs_schema')
+const {
+  SlashCommandBuilder,
+  PermissionFlagsBits,
+  EmbedBuilder,
+} = require("discord.js");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("test")
     .setDescription("Testowe!")
-    .addStringOption((option) =>
-          option
-            .setName("kategoria")
-            .setDescription("Kategorie gifów")
-            .setRequired(true)
-            .addChoices(
-              { name: "horny", value: "gif_horny" },
-              { name: "drink", value: "gif_drink" }
-            )
-        )
-    .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
+    .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
+    .addUserOption((option) =>
+      option.setName("target").setDescription("Czyj avatar chcesz zobaczyć")
+    ),
   async execute(interaction) {
-    const gif_type = interaction.options.getString("kategoria");
-      const gifs = await gifs_schema.find({ type: gif_type }, ["url"]);
+        const user = interaction.options.getMember("target");
+        const avatar_options = { dynamic: true, size: 4096, format: "png" }
+    const embed = new EmbedBuilder()
+      .setColor(interaction.member.displayColor)
+      .setTitle(interaction.member.displayName)
+      .setImage(user.displayAvatarURL(avatar_options));
 
-console.log(gifs);
-        return interaction.reply('test');
+    return interaction.reply({ embeds: [embed] });
   },
 };

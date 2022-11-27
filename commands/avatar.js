@@ -21,7 +21,7 @@ module.exports = {
       .setImage(
         interaction.member.displayAvatarURL({
           dynamic: true,
-          size: 2048,
+          size: 4096,
           format: "png",
         })
       );
@@ -31,7 +31,7 @@ module.exports = {
       embed.setImage(
         user.displayAvatarURL({
           dynamic: true,
-          size: 2048,
+          size: 4096,
           format: "png",
         })
       );
