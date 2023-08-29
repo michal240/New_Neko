@@ -2,6 +2,6 @@ module.exports = {
   name: "ready",
   once: true,
   execute(client) {
-    console.log(`${client.user.tag} gotowa do akcji!`);
+    console.info(`${client.user} gotowa do akcji!`);
   },
 };

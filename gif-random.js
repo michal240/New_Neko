@@ -18,12 +18,17 @@ async function gif_random(gif_type, author, target) {
     desc = `**${author.displayName}** pije **${target.displayName}**`;
   }
   if (gif_type === "gif_steal") {
-    desc = `*${author.displayName}** kradnie **${target.displayName}**`;
+    desc = `**${author.displayName}** kradnie **${target.displayName}**`;
   }
   if (gif_type === "gif_lick") {
-    desc = `*${author.displayName}** liże **${target.displayName}**`;
+    desc = `**${author.displayName}** liże **${target.displayName}**`;
   }
-
+  if (gif_type === "gif_step") {
+    desc = `**${author.displayName}** staje na **${target.displayName}**`;
+  }
+  if (gif_type === "gif_pan") {
+    desc = `**${author.displayName}** przypierdolił/a patelnią **${target.displayName}**`;
+  }
   const data = {
     color: author.displayColor,
     image: {

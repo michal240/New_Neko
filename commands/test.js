@@ -1,24 +1,41 @@
-const {
-  SlashCommandBuilder,
-  PermissionFlagsBits,
-  EmbedBuilder,
-} = require("discord.js");
+const { SlashCommandBuilder, PermissionFlagsBits } = require("discord.js");
+const { twitch_streamers, twitch_check } = require("./../twitch");
+const live_schema = require("./../schema/live_schema");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("test")
-    .setDescription("Testowe!")
-    .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
-    .addUserOption((option) =>
-      option.setName("target").setDescription("Czyj avatar chcesz zobaczyć")
-    ),
+    .setDescription("test")
+    .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild),
   async execute(interaction) {
-        const user = interaction.options.getMember("target");
-        const avatar_options = { dynamic: true, size: 4096, format: "png" }
-    const embed = new EmbedBuilder()
-      .setColor(interaction.member.displayColor)
-      .setTitle(interaction.member.displayName)
-      .setImage(user.displayAvatarURL(avatar_options));
+    const interval = 36000000;
 
-    return interaction.reply({ embeds: [embed] });
+    const channel = interaction.client.channels.cache.get("845643327209865236");
+
+    const streamers = await twitch_streamers();
+    console.log(streamers);
+    for (const streamer of streamers) {
+      const content = await twitch_check(streamer);
+      if (content) {
+        const online = await live_schema.findOne({ url: content });
+
+        const las_live = Date.now() - online.updatedAt;
+        if (!online.updatedAt) {
+          channel.send(`${content}`);
+
+          await live_schema.findOneAndUpdate(
+            { url: content },
+            { timestamps: true }
+          );
+        } else if (las_live > interval) {
+          channel.send(`${content}`);
+          await live_schema.findOneAndUpdate(
+            { url: content },
+            { timestamps: true }
+          );
+        }
+      }
+    }
+
+    return interaction.reply("testing");
   },
 };

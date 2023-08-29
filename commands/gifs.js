@@ -3,7 +3,7 @@ const { gif_random } = require("../gif-random");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("gifs")
-    .setDescription("Róźne gify.")
+    .setDescription("Różne gify.")
     .addStringOption((option) =>
       option
         .setName("kategoria")
@@ -13,7 +13,9 @@ module.exports = {
           { name: "horny", value: "gif_horny" },
           { name: "drink", value: "gif_drink" },
           { name: "steal", value: "gif_steal" },
-          { name: "lick", value: "gif_lick" }
+          { name: "lick", value: "gif_lick" },
+          { name: "step on", value: "gif_step" },
+          { name: "patelnia", value: "gif_pan" }
         )
     )
     .addUserOption((option) =>
@@ -27,7 +29,6 @@ module.exports = {
     const target = interaction.options.getMember("cel");
     const author = interaction.member;
     const gif = await gif_random(gif_type, author, target);
-    console.log(gif);
     const embed = new EmbedBuilder(gif);
     return interaction.reply({ embeds: [embed] });
   },

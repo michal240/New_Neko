@@ -2,8 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { REST } = require("@discordjs/rest");
 const { Routes } = require("discord.js");
-const { clientId } = require("./config.json");
-
+const clientId = "819251754334945295";
 const commands = [];
 const commandsPath = path.join(__dirname, "commands");
 const commandFiles = fs
@@ -20,5 +19,5 @@ const rest = new REST({ version: "10" }).setToken(process.env.MAIN_TOKEN);
 
 rest
   .put(Routes.applicationCommands(clientId), { body: commands })
-  .then(() => console.log("Successfully registered application commands."))
+  .then(() => console.log("Deployed globally."))
   .catch(console.error);

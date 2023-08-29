@@ -13,16 +13,12 @@ module.exports = {
     const target = interaction.options.getMember("cel");
     const author = interaction.member;
     const pozwolenie = ["533365521488543761", "459617415043481600"];
-    const killed = ["528676042735484939", "261195977434726400"];
 
     if (!pozwolenie.includes(author.id)) {
       return interaction.reply({
         content: "Nie masz licencji na zabijanie.",
         ephemeral: true,
       });
-    }
-    if (!killed.includes(target.id)) {
-      return interaction.reply("Musisz oznaczyć kogoś z listy.");
     }
 
     const embed = new EmbedBuilder()

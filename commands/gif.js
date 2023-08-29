@@ -7,8 +7,8 @@ const gif_schema = require("../schema/gifs_schema");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("gif")
-    .setDescription("Get info about a user or a server!")
-    .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
+    .setDescription("Opcje dodawania gifów")
+    .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
     .addSubcommand((subcommand) =>
       subcommand
         .setName("add")
@@ -22,7 +22,9 @@ module.exports = {
               { name: "horny", value: "gif_horny" },
               { name: "drink", value: "gif_drink" },
               { name: "steal", value: "gif_steal" },
-              { name: "lick", value: "gif_lick" }
+              { name: "lick", value: "gif_lick" },
+              { name: "step on", value: "gif_step" },
+              { name: "patelnia", value: "gif_pan" }
             )
         )
         .addStringOption((option) =>
@@ -45,7 +47,9 @@ module.exports = {
               { name: "horny", value: "gif_horny" },
               { name: "drink", value: "gif_drink" },
               { name: "steal", value: "gif_steal" },
-              { name: "lick", value: "gif_lick" }
+              { name: "lick", value: "gif_lick" },
+              { name: "step on", value: "gif_step" },
+              { name: "patelnia", value: "gif_pan" }
             )
         )
     )
@@ -53,7 +57,6 @@ module.exports = {
       subcommand
         .setName("delete")
         .setDescription("Usuwanie gifów.")
-
         .addStringOption((option) =>
           option
             .setName("url")
