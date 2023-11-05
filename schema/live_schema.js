@@ -9,6 +9,7 @@ const liveSchema = new mongoose.Schema(
   {
     url: reqString,
     name: reqString,
+    stream_channel: reqString,
   },
   { timestamps: true }
 );

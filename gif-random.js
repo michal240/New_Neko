@@ -11,24 +11,27 @@ async function gif_random(gif_type, author, target) {
   }
   const wybrany = urls[Math.floor(Math.random() * urls.length)];
   let desc;
-  if (gif_type === "gif_horny") {
-    desc = `**${target.displayName}** idziesz do horny jail.`;
+  switch (gif_type) {
+    case "gif_horny":
+      desc = `**${target.displayName}** idziesz do horny jail.`;
+      break;
+    case "gif_drink":
+      desc = `**${author.displayName}** pije **${target.displayName}**`;
+      break;
+    case "gif_steal":
+      desc = `**${author.displayName}** kradnie **${target.displayName}**`;
+      break;
+    case "gif_lick":
+      desc = `**${author.displayName}** liże **${target.displayName}**`;
+      break;
+    case "gif_step":
+      desc = `**${author.displayName}** staje na **${target.displayName}**`;
+      break;
+    case "gif_pan":
+      desc = `**${author.displayName}** przypierdolił/a patelnią **${target.displayName}**`;
+      break;
   }
-  if (gif_type === "gif_drink") {
-    desc = `**${author.displayName}** pije **${target.displayName}**`;
-  }
-  if (gif_type === "gif_steal") {
-    desc = `**${author.displayName}** kradnie **${target.displayName}**`;
-  }
-  if (gif_type === "gif_lick") {
-    desc = `**${author.displayName}** liże **${target.displayName}**`;
-  }
-  if (gif_type === "gif_step") {
-    desc = `**${author.displayName}** staje na **${target.displayName}**`;
-  }
-  if (gif_type === "gif_pan") {
-    desc = `**${author.displayName}** przypierdolił/a patelnią **${target.displayName}**`;
-  }
+
   const data = {
     color: author.displayColor,
     image: {

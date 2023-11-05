@@ -4,6 +4,7 @@ const {
   EmbedBuilder,
 } = require("discord.js");
 const live_schema = require("../schema/live_schema");
+const config_schema = require("../schema/config_schema");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("twitch")
@@ -25,6 +26,11 @@ module.exports = {
     )
     .addSubcommand((subcommand) =>
       subcommand
+        .setName("set-channel")
+        .setDescription("Ustaw kanał na powiadomienia o streamach.")
+    )
+    .addSubcommand((subcommand) =>
+      subcommand
         .setName("delete")
         .setDescription("Usuwanie kanałów.")
         .addStringOption((option) =>
@@ -36,9 +42,32 @@ module.exports = {
     ),
   async execute(interaction) {
     const link = interaction.options.getString("url");
-    const path = new URL(link).pathname;
-    const name = path.slice(1);
+    if (interaction.options.getSubcommand() === "set-channel") {
+      const serverID = interaction.guild.id;
+      const stream_channel = interaction.channel.id;
+      console.log(serverID);
+      console.log(stream_channel);
+      await config_schema.findOneAndUpdate(
+        {
+          serverID,
+        },
+        {
+          stream_channel,
+        },
+        {
+          upsert: true,
+        }
+      );
+      return interaction.reply(
+        `Ustawiono ${interaction.channel.name} jako kanał do powiadomień o streamach.`
+      );
+    }
     if (interaction.options.getSubcommand() === "add") {
+      const path = new URL(link).pathname;
+      const name = path.slice(1);
+      const channel = await config_schema.findOne({
+        serverID: interaction.guild.id,
+      });
       await live_schema.findOneAndUpdate(
         {
           url: link,
@@ -46,16 +75,14 @@ module.exports = {
         {
           url: link,
           name: name,
+          stream_channel: channel.stream_channel,
         },
         {
           upsert: true,
           timestamps: false,
         }
       );
-      return interaction.reply({
-        content: `Dodano ${link} do bazy danych.`,
-        ephemeral: true,
-      });
+      return interaction.reply(`Dodano <${link}> do bazy danych.`);
     }
     if (interaction.options.getSubcommand() === "list") {
       let urls = [];

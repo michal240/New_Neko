@@ -24,7 +24,9 @@ module.exports = {
               { name: "steal", value: "gif_steal" },
               { name: "lick", value: "gif_lick" },
               { name: "step on", value: "gif_step" },
-              { name: "patelnia", value: "gif_pan" }
+              { name: "patelnia", value: "gif_pan" },
+              { name: "slap", value: "gif_slap" },
+              { name: "cookie", value: "gif_cookie" }
             )
         )
         .addStringOption((option) =>
@@ -49,7 +51,9 @@ module.exports = {
               { name: "steal", value: "gif_steal" },
               { name: "lick", value: "gif_lick" },
               { name: "step on", value: "gif_step" },
-              { name: "patelnia", value: "gif_pan" }
+              { name: "patelnia", value: "gif_pan" },
+              { name: "slap", value: "gif_slap" },
+              { name: "cookie", value: "gif_cookie" }
             )
         )
     )

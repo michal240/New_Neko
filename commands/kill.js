@@ -10,20 +10,11 @@ module.exports = {
         .setRequired(true)
     ),
   async execute(interaction) {
-    const target = interaction.options.getMember("cel");
+    const target = interaction.options.getMember("target");
     const author = interaction.member;
-    const pozwolenie = ["533365521488543761", "459617415043481600"];
-
-    if (!pozwolenie.includes(author.id)) {
-      return interaction.reply({
-        content: "Nie masz licencji na zabijanie.",
-        ephemeral: true,
-      });
-    }
 
     const embed = new EmbedBuilder()
-      .setColor("#0000ff")
-      .setTitle("")
+      .setColor(author.displayColor)
       .setDescription(
         `**${author.displayName}** zabija **${target.displayName}**`
       )

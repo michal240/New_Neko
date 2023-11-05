@@ -1,6 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const { gif_random } = require("../gif-random");
 module.exports = {
+  cooldown: 5,
   data: new SlashCommandBuilder()
     .setName("gifs")
     .setDescription("Różne gify.")
@@ -15,7 +16,8 @@ module.exports = {
           { name: "steal", value: "gif_steal" },
           { name: "lick", value: "gif_lick" },
           { name: "step on", value: "gif_step" },
-          { name: "patelnia", value: "gif_pan" }
+          { name: "patelnia", value: "gif_pan" },
+          { name: "slap", value: "gif_slap" }
         )
     )
     .addUserOption((option) =>

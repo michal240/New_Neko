@@ -4,6 +4,8 @@ const coin_schema = require("../schema/coin_shema");
 const rn = require("random-number");
 const wait = require("node:timers/promises").setTimeout;
 module.exports = {
+  cooldown: 5,
+
   data: new SlashCommandBuilder()
     .setName("coinflip")
     .setDescription("Coinfliping"),
