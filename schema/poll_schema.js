@@ -12,6 +12,7 @@ const pollSchema = new mongoose.Schema({
     required: true,
     default: undefined,
   },
+  type: reqString,
 });
 const model = mongoose.model("poll", pollSchema);
 module.exports = model;

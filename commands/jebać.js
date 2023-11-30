@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 
 module.exports = {
-  cooldown: 5,
+  cooldown: 30,
   data: new SlashCommandBuilder()
     .setName("jebać")
     .setDescription("jebanie")

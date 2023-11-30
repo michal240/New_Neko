@@ -19,7 +19,7 @@ module.exports = {
         )
         .addStringOption((option) =>
           option
-            .setName("kategoria")
+            .setName("type")
             .setDescription("Kategoria ankiety")
             .setRequired(true)
             .addChoices(
@@ -55,13 +55,51 @@ module.exports = {
     const channelID = interaction.channel.id;
 
     if (interaction.options.getSubcommand() === "add") {
-      const votes = interaction.options.getString("kandydaci").split(" ");
-      let new_votes = votes;
-      const old_votes = await poll_schema.findOne({ channelID });
-      console.log(old_votes);
-      if (old_votes !== null) {
-        new_votes = old_votes.vote_options.concat(votes);
+      const type = interaction.options.getString("type");
+      if (type === "text_poll") {
+        const filter = (m) => m.member.id === interaction.member.id;
+
+        interaction
+          .reply({
+            content:
+              "Wyślij opcje, które chcesz dodać do ankiety. Pamiętaj by oddzielić je przecinkami! Max 10.",
+            fetchReply: true,
+            ephemeral: true,
+          })
+          .then(() => {
+            interaction.channel
+              .awaitMessages({
+                filter: filter,
+                max: 1,
+                time: 30000,
+                errors: ["time"],
+              })
+              .then(async (collected) => {
+                const e = collected.map((element) => {
+                  return element;
+                });
+                interaction.channel.messages.delete(e[0].id);
+                let text = "";
+                const old_votes = await poll_schema.findOne({ channelID });
+                console.log(old_votes);
+                if (old_votes !== null) {
+                  new_votes = old_votes.vote_options.concat(votes);
+                }
+                const content = e[0].content.split(", ");
+                for (let counter = 0; counter < content.length; ++counter) {
+                  text += `**${counter + 1}**: ${content[counter]} \n`;
+                }
+                interaction.followUp({ content: text, ephemeral: true });
+              })
+              .catch((collected) => {
+                console.log(collected);
+                interaction.followUp(
+                  "Looks like nobody got the answer this time."
+                );
+              });
+          });
       }
+
       await poll_schema.findOneAndUpdate(
         {
           channelID,
@@ -69,6 +107,7 @@ module.exports = {
         {
           channelID,
           vote_options: new_votes,
+          type,
         },
         {
           upsert: true,

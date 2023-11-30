@@ -30,6 +30,9 @@ async function gif_random(gif_type, author, target) {
     case "gif_pan":
       desc = `**${author.displayName}** przypierdolił/a patelnią **${target.displayName}**`;
       break;
+    case "gif_puci":
+      desc = `**${author.displayName}** robi puci puci **${target.displayName}**`;
+      break;
   }
 
   const data = {

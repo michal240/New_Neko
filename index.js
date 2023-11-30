@@ -2,7 +2,7 @@ const discord = require("discord.js");
 const { twitch_send, twitch_auth } = require("./twitch");
 const dotenv = require("dotenv");
 const CronJob = require("cron").CronJob;
-
+const game_schema = require("./schema/game_schema");
 dotenv.config();
 const mongo = require("./mongo");
 const { GatewayIntentBits, Partials, Client, Collection } = discord;
@@ -48,6 +48,19 @@ client.on("messageDelete", async (message) => {
     console.log(error);
   }
 });
+
+client.on("messageCreate", async (message) => {
+  const member = message.member;
+
+  if (member.user.bot) return;
+  if (await game_schema.findOne({ UserID: member.id })) return;
+  await game_schema.findOneAndUpdate(
+    { UserID: member.id },
+    { UserID: member.id, wins: 0, losses: 0 },
+    { upsert: true }
+  );
+});
+
 client.on("interactionCreate", async (interaction) => {
   if (!interaction.isChatInputCommand()) return;
 
@@ -91,7 +104,7 @@ client.on("interactionCreate", async (interaction) => {
   }
 });
 
-client.login(process.env.MAIN_TOKEN).then(() => {
+client.login(process.env.TEST_TOKEN).then(() => {
   eventHandler(client);
   commandHandler(client);
 });

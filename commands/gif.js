@@ -53,7 +53,8 @@ module.exports = {
               { name: "step on", value: "gif_step" },
               { name: "patelnia", value: "gif_pan" },
               { name: "slap", value: "gif_slap" },
-              { name: "cookie", value: "gif_cookie" }
+              { name: "cookie", value: "gif_cookie" },
+              { name: "puci puci", value: "gif_puci" }
             )
         )
     )

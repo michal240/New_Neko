@@ -17,7 +17,8 @@ module.exports = {
           { name: "lick", value: "gif_lick" },
           { name: "step on", value: "gif_step" },
           { name: "patelnia", value: "gif_pan" },
-          { name: "slap", value: "gif_slap" }
+          { name: "slap", value: "gif_slap" },
+          { name: "puci puci", value: "gif_puci" }
         )
     )
     .addUserOption((option) =>

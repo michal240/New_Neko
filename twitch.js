@@ -50,12 +50,10 @@ async function twitch_send(client) {
     const content = await twitch_check(name);
 
     if (content) {
-      console.log(content);
       const { user_name, user_login, started_at } = content;
       const time = moment(started_at).format("X");
       const db = await live_schema.findOne({ name: user_login });
       const las_live = moment().valueOf() - moment(db.updatedAt).valueOf();
-      console.log(las_live);
       if (!db.updatedAt) {
         await live_schema.findOneAndUpdate(
           { name: user_login },

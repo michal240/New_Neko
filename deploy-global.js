@@ -14,7 +14,9 @@ for (const file of commandFiles) {
   const command = require(filePath);
   commands.push(command.data.toJSON());
 }
-
+commands.forEach((command) => {
+  console.log(command.name);
+});
 const rest = new REST({ version: "10" }).setToken(process.env.MAIN_TOKEN);
 
 rest
