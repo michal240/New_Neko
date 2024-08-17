@@ -1,8 +1,8 @@
 const CLIENT_ID = "3hlgjasvwc9svz2vipvyzah08l8ur3";
-const fetch = require("node-fetch");
-const live_schema = require("./schema/live_schema");
-const auth_schema = require("./schema/twitch_auth_schema");
-const moment = require("moment");
+import fetch from "node-fetch";
+import live_schema from "./schema/live_schema.js";
+import auth_schema from "./schema/twitch_auth_schema.js";
+import moment from "moment";
 async function twitch_auth() {
   const theUrl = `https://id.twitch.tv/oauth2/token?client_id=${CLIENT_ID}&client_secret=maexnwlf3pmsds01s1scbhyi6zyy33&grant_type=client_credentials`;
 
@@ -32,7 +32,7 @@ async function twitch_check(username) {
     },
   });
   const data = await response.json();
-
+  console.log(data, username);
   if (data.data?.length) {
     const user = data.data[0];
     const { user_name, user_login, started_at } = user;
@@ -48,7 +48,7 @@ async function twitch_send(client) {
     const { name, stream_channel } = streamer;
     const channel = client.channels.cache.get(stream_channel);
     const content = await twitch_check(name);
-
+    if (channel === undefined) return;
     if (content) {
       const { user_name, user_login, started_at } = content;
       const time = moment(started_at).format("X");
@@ -78,4 +78,4 @@ async function twitch_send(client) {
   }
 }
 
-module.exports = { twitch_check, twitch_send, twitch_auth };
+export { twitch_check, twitch_send, twitch_auth };

@@ -1,7 +1,11 @@
-const fs = require("node:fs");
-const path = require("node:path");
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
-function commandHandler(client) {
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+export default async function commandHandler(client) {
   const commandsPath = path.join(__dirname, "../commands");
   const commandFiles = fs
     .readdirSync(commandsPath)
@@ -9,9 +13,9 @@ function commandHandler(client) {
 
   for (const file of commandFiles) {
     const filePath = path.join(commandsPath, file);
-    const command = require(filePath);
+
+    const { default: command } = await import(pathToFileURL(filePath));
+
     client.commands.set(command.data.name, command);
   }
 }
-
-module.exports = { commandHandler };

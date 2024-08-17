@@ -1,11 +1,11 @@
-const {
+import {
   SlashCommandBuilder,
   PermissionFlagsBits,
   EmbedBuilder,
-} = require("discord.js");
-const live_schema = require("../schema/live_schema");
-const config_schema = require("../schema/config_schema");
-module.exports = {
+} from "discord.js";
+import live_schema from "../schema/live_schema.js";
+import config_schema from "../schema/config_schema.js";
+export default {
   data: new SlashCommandBuilder()
     .setName("twitch")
     .setDescription("Zarządzanie bazą kanałów")

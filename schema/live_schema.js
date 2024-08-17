@@ -1,5 +1,4 @@
-const mongoose = require("mongoose");
-
+import mongoose from "mongoose";
 const reqString = {
   type: String,
   required: true,
@@ -14,4 +13,4 @@ const liveSchema = new mongoose.Schema(
   { timestamps: true }
 );
 const model = mongoose.model("live", liveSchema);
-module.exports = model;
+export default model;

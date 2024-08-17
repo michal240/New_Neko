@@ -1,5 +1,4 @@
-const mongoose = require("mongoose");
-
+import mongoose from "mongoose";
 const reqString = {
   type: String,
   required: true,
@@ -10,4 +9,4 @@ const authSchema = new mongoose.Schema({
   auth_token: reqString,
 });
 const model = mongoose.model("auth", authSchema);
-module.exports = model;
+export default model;

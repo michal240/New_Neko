@@ -1,7 +1,7 @@
-const { SlashCommandBuilder, PermissionFlagsBits } = require("discord.js");
-const dotenv = require("dotenv");
+import { SlashCommandBuilder, PermissionFlagsBits } from "discord.js";
+import dotenv from "dotenv";
 dotenv.config();
-module.exports = {
+export default {
   data: new SlashCommandBuilder()
     .setName("deploy")
     .setDescription("Dodanie komend.")
@@ -18,9 +18,9 @@ module.exports = {
     }
     const global = interaction.options.getBoolean("global");
     if (global === true) {
-      require("../deploy-global");
+      import("../deploy-global.js");
     } else {
-      require("../deploy");
+      import("../deploy.js");
     }
 
     return interaction.reply({ content: "Dodano komendy!", ephemeral: true });

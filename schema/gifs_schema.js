@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const reqString = {
   type: String,
@@ -10,4 +10,4 @@ const gifsSchema = new mongoose.Schema({
   type: reqString,
 });
 const model = mongoose.model("gifs", gifsSchema);
-module.exports = model;
+export default model;

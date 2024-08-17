@@ -1,6 +1,6 @@
-const gif_schema = require("./schema/gifs_schema");
+import gif_schema from "./schema/gifs_schema.js";
 
-async function gif_random(gif_type, author, target) {
+export default async function gif_random(gif_type, author, target) {
   let urls = [];
   const gifs = await gif_schema.find({ type: gif_type }, ["url", "type"]);
   if (gifs.length) {
@@ -9,6 +9,7 @@ async function gif_random(gif_type, author, target) {
       urls.push(url);
     }
   }
+  if (!target) throw "**No user found.**";
   const wybrany = urls[Math.floor(Math.random() * urls.length)];
   let desc;
   switch (gif_type) {
@@ -33,6 +34,18 @@ async function gif_random(gif_type, author, target) {
     case "gif_puci":
       desc = `**${author.displayName}** robi puci puci **${target.displayName}**`;
       break;
+    case "gif_cuddle":
+      desc = `**${author.displayName}** tuli **${target.displayName}**`;
+      break;
+    case "gif_hug":
+      desc = `**${author.displayName}** prztula **${target.displayName}**`;
+      break;
+    case "gif_slap":
+      desc = `**${author.displayName}** uderza **${target.displayName}**`;
+      break;
+    case "gif_kiss":
+      desc = `**${author.displayName}** całuje **${target.displayName}**`;
+      break;
   }
 
   const data = {
@@ -45,5 +58,3 @@ async function gif_random(gif_type, author, target) {
 
   return data;
 }
-
-module.exports = { gif_random };
